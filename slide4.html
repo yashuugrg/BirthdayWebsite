@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ending 🎉</title>
+<style>
+    body {
+        text-align: center;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background: linear-gradient(to right, #fbd3e9, #bb377d);
+        color: white;
+        padding: 50px;
+        overflow: hidden;
+        position: relative;
+    }
+    h1 {
+        font-size: 60px;
+        margin-bottom: 20px;
+    }
+    p {
+        font-size: 24px;
+        margin: 20px auto;
+        width: 80%;
+    }
+    .highlight {
+        font-weight: bold;
+        color: #fff200;
+    }
+    #heart {
+        font-size: 200px; /* Big heart */
+        color: red;
+        margin: 30px auto;
+        display: block;
+        animation: beat 1s infinite;
+    }
+    @keyframes beat {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+    }
+    #confetti-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+    }
+</style>
+</head>
+<body>
+
+<h1>🎉 Love You Forever! 💖</h1>
+<p>Thank you for being the <span class="highlight">most amazing sister</span> in the world 🥰</p>
+<p>May your life be full of <span class="highlight">happiness, love, and success</span> ✨</p>
+<p>Keep shining, keep smiling, and never stop dreaming 💫</p>
+<p>Always remember, I’ll always be there to cheer you up and support you 💕</p>
+<p>Happiest Birthday Ever! 🎂🎈</p>
+
+<!-- Big red heart -->
+<div id="heart">❤️</div>
+
+<canvas id="confetti-canvas"></canvas>
+
+<script>
+// Simple Confetti Animation
+const canvas = document.getElementById("confetti-canvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const confettiCount = 150;
+const confetti = [];
+
+for(let i = 0; i < confettiCount; i++) {
+    confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 6 + 4,
+        d: Math.random() * confettiCount,
+        color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+        tilt: Math.random() * 10 - 10,
+        tiltAngleIncrement: Math.random() * 0.07 + 0.05,
+        tiltAngle: 0
+    });
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confetti.forEach(c => {
+        ctx.beginPath();
+        ctx.lineWidth = c.r / 2;
+        ctx.strokeStyle = c.color;
+        ctx.moveTo(c.x + c.tilt + c.r / 4, c.y);
+        ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 4);
+        ctx.stroke();
+    });
+    update();
+    requestAnimationFrame(draw);
+}
+
+function update() {
+    confetti.forEach((c, i) => {
+        c.tiltAngle += c.tiltAngleIncrement;
+        c.y += (Math.cos(c.d) + 3 + c.r / 2) / 2;
+        c.tilt = Math.sin(c.tiltAngle) * 15;
+        if(c.y > canvas.height) {
+            c.x = Math.random() * canvas.width;
+            c.y = -20;
+        }
+    });
+}
+
+draw();
+</script>
+
+</body>
+</html>
